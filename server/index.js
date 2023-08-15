@@ -34,17 +34,36 @@ const connectDB = async () => {
 
   // Create a new blog post object
 
-  const article = new Blog({
-    title: 'Awesome Post!',
-    slug: 'awesome-post',
+  // const article = new Blog({
+  //   title: 'Awesome Post!',
+  //   slug: 'awesome-post',
+  //   published: true,
+  //   content: 'this is the content',
+  //   tags: ['tag1', 'tag2'],
+  // });
+
+/* Insert the article in our MongoDB database  */
+    // await article.save();
+
+
+
+    /* Create a new blog post object method 2 */
+  const article2 = await Blog.create({
+    title: 'Awesome Post 2!',
+    slug: 'awesome-post 2',
     published: true,
-    content: 'this is the content',
+    content: 'this is the 2nd content',
     tags: ['tag1', 'tag2'],
-  });
+  })
+  console.log(article2)
+
+  /* Update the article */
+  article2.title = "THE UPDATED TITLE";
+  await article2.save();
+  console.log(article2)
 
 
-  // Insert the article in our MongoDB database
-    await article.save();
+  
 
   // Find a single blog post
     const firstArticle = await Blog.findOne({});
