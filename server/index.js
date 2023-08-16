@@ -55,32 +55,36 @@ const connectDB = async () => {
     content: 'this is the 2nd content',
     tags: ['tag1', 'tag2'],
   })
-  console.log(article2)
 
   /* Update the article */
   article2.title = "THE UPDATED TITLE";
   await article2.save();
-  console.log(article2)
 
 
   
 
-  // Find a single blog post
-    const firstArticle = await Blog.findOne({});
+  /**  Find a single blog post */
+    // const firstArticle = await Blog.findOne({});
+    // console.log(firstArticle);
+
+  //**  Find a all blog post  */
+    // const firstArticle = await Blog.find();
+    // console.log(firstArticle);
+
+  // Find a blog post by id
+    // const firstArticle = await Blog.findById("64dbfbbb598845973115e9c1").exec();
+    // console.log(firstArticle);
+
+  /* Find a blog post by id and filter out the fields */
+    const firstArticle = await Blog.findById("64dbfbbb598845973115e9c1", "title slug content").exec();
     console.log(firstArticle);
 
-//   const kittySchema = new mongoose.Schema({
-//     name: String
-//   })
+    /** Deleting data */
+    // const blog = await Blog.findByIdAndDelete("64dbfbbb598845973115e9c1").exec(); // delete by id
 
-//   const Kitten = mongoose.model('Kitten', kittySchema);
-  
-//   const kittens = await Kitten.find();
-  
-
-
-  
-
+    /** deleteMany() methods */
+   // const blog2 = await Blog.deleteMany({title: 'THE UPDATED TITLE'}).exec(); // delete all
+    // console.log(blog2)
 
 app.listen(port, () => {
     
