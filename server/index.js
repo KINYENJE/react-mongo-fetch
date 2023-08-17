@@ -32,8 +32,8 @@ const connectDB = async () => {
 
   /** CREATE A NEW USER */
   const user = await User.create({
-    name: 'John Nike',
-    email: 'njenga@gmail.com',
+    name: 'Bob Joe',
+    email: 'bob@gmail.com',
   });
 
 
@@ -55,13 +55,13 @@ const connectDB = async () => {
 
 
     /* Create a new blog post object method 2 */
-  const article2 = await Blog.create({
-    title: 'Awesome Post 2!',
-    slug: 'awesome-post 2',
-    author: user._id,
-    published: true,
-    tags: ['tag1', 'tag2'],
-  })
+  // const article2 = await Blog.create({
+  //   title: 'Awesome Post 3!',
+  //   slug: 'awesome-post 3',
+  //   author: user._id,
+  //   published: true,
+  //   tags: ['tag1', 'tag2'],
+  // })
 
   
 
@@ -71,8 +71,19 @@ const connectDB = async () => {
 
 
   /** FIND INFO OF THE USER ALONG WITH THE BLOG POST ==========we use the .populate() method to all the info for the author  */
-  const article = await Blog.findOne({title: 'Awesome Post 2!'}).populate('author');
-  console.log(article)
+  // const article = await Blog.findOne({title: 'Awesome Post 3!'}).populate('author');
+  // console.log(article)
+
+  try {
+    const article3 = await Blog.findById("64de44e21ef4e1d053ecc541").exec();
+    article3.title = "Updated Title 4";
+    await article3.save();
+    console.log('update was a success')
+    console.log(article3);
+  } catch (error) {
+    console.log('id not found', error)
+  }
+
 
   
 
