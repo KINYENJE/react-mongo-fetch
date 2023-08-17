@@ -1,22 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+
+  const [blogs, setBlogs] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost:2121/')
+      .then(response => setBlogs(response.data)) 
+      console.log(blogs) 
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       {blogs.map((blog) => { 
+          return (
+        <h1>{blog.title}</h1> )
+        })}
       </header>
     </div>
   );
