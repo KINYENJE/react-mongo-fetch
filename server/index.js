@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import 'dotenv/config';
 import Blog from './model/Blog.js';
+import User from './model/User.js';
 
 const app = express();
 
@@ -29,6 +30,12 @@ const connectDB = async () => {
   }
   connectDB();
 
+  /** CREATE A NEW USER */
+  const user = await User.create({
+    name: 'John Nike',
+    email: 'njenga@gmail.com',
+  });
+
 
 
 
@@ -51,15 +58,21 @@ const connectDB = async () => {
   const article2 = await Blog.create({
     title: 'Awesome Post 2!',
     slug: 'awesome-post 2',
+    author: user._id,
     published: true,
-    content: 'this is the 2nd content',
     tags: ['tag1', 'tag2'],
   })
 
-  /* Update the article */
-  article2.title = "THE UPDATED TITLE";
-  await article2.save();
+  
 
+  /* Update the article */
+  // article2.title = "THE UPDATED TITLE";
+  // await article2.save();
+
+
+  /** FIND INFO OF THE USER ALONG WITH THE BLOG POST ==========we use the .populate() method to all the info for the author  */
+  const article = await Blog.findOne({title: 'Awesome Post 2!'}).populate('author');
+  console.log(article)
 
   
 
@@ -76,15 +89,15 @@ const connectDB = async () => {
     // console.log(firstArticle);
 
   /* Find a blog post by id and filter out the fields */
-    const firstArticle = await Blog.findById("64dbfbbb598845973115e9c1", "title slug content").exec();
-    console.log(firstArticle);
+    // const firstArticle = await Blog.findById("64dbfbbb598845973115e9c1", "title slug content").exec();
+    // console.log(firstArticle);
 
     /** Deleting data */
     // const blog = await Blog.findByIdAndDelete("64dbfbbb598845973115e9c1").exec(); // delete by id
 
     /** deleteMany() methods */
-   // const blog2 = await Blog.deleteMany({title: 'THE UPDATED TITLE'}).exec(); // delete all
-    // console.log(blog2)
+  //  const blog2 = await Blog.deleteMany({}).exec(); // delete all
+  //   console.log(blog2)
 
 app.listen(port, () => {
     

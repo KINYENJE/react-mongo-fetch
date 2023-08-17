@@ -1,18 +1,37 @@
 import mongoose from "mongoose";
 
-const {Schema , model} = mongoose;
+const {Schema , SchemaTypes, model} = mongoose;
 
 const blogSchema = new Schema({
-    title: String,
-    slug : String,
-    published: Boolean,
-    author: String,
+    title: {type: String,
+      required: true,
+     },
+    slug :{type: String,
+      required: true,
+      lowercase: true,
+    },
+    published: { type: Boolean,
+      default: false,
+     },
+    author: { 
+      type: SchemaTypes.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     content: String,
     tags: [String],
-    createdAt: Date,
+    createdAt: {
+      type: Date,
+      default: () => Date.now(),
+      immutable: true, 
+    },
     updatedAt: Date,
     comments: [{
-      user: String,
+      user: {
+        type: SchemaTypes.ObjectId,
+        ref: 'User',
+        required: false,
+      },
       content: String,
       votes: Number
     }]
